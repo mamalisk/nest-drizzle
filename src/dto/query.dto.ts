@@ -21,25 +21,37 @@ export class ExecuteQueryDto {
 
 export class InsertRecordDto {
   @ApiProperty({
-    description: 'Name field',
-    example: 'John Doe',
+    description: 'Table name to insert into',
+    example: 'test_table',
   })
   @IsString()
-  name: string;
+  tableName: string;
 
   @ApiProperty({
-    description: 'Email field',
-    example: 'john@example.com',
+    description: 'Data payload to insert',
+    example: {
+      name: 'John Doe',
+      email: 'john@example.com',
+      description: 'Test record description'
+    },
+  })
+  payload: Record<string, any>;
+}
+
+export class TruncateTableDto {
+  @ApiProperty({
+    description: 'Table name to truncate (clear all data)',
+    example: 'test_table',
   })
   @IsString()
-  email: string;
+  tableName: string;
 
   @ApiProperty({
-    description: 'Description field',
-    example: 'Test record description',
+    description: 'Whether to restart identity sequences (auto-increment columns)',
+    example: true,
     required: false,
+    default: false,
   })
   @IsOptional()
-  @IsString()
-  description?: string;
+  restartIdentity?: boolean = false;
 }
